@@ -208,8 +208,8 @@ export function CartPage() {
             <Stack gap="sm">
               {lines.map((line) => {
                 const kit = line.kit;
-                const imageUrl = kit?.image
-                  ? getKitImageUrl(kit.image)
+                const imageUrl = kit?.images[0]
+                  ? getKitImageUrl(kit.images[0])
                   : undefined;
                 const kitLink = (
                   <Anchor

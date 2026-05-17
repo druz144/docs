@@ -43,7 +43,7 @@ type KitCardProps = {
 };
 
 export function KitCard({ kit }: KitCardProps) {
-  const imageUrl = kit.image ? getKitImageUrl(kit.image) : undefined;
+  const imageUrl = kit.images[0] ? getKitImageUrl(kit.images[0]) : undefined;
   const [imageFailed, setImageFailed] = useState(false);
   const anchorHref = `#${kit.id}`;
   const { getAmount, addItem, incrementItem, decrementItem } = useCart();
