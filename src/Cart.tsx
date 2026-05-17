@@ -210,7 +210,7 @@ export function CartPage() {
                 const kitLink = (
                   <Anchor
                     component={Link}
-                    to={{ pathname: "/", hash: line.id }}
+                    to={{ pathname: "/products", hash: line.id }}
                     underline="hover"
                     fw={600}
                   >
@@ -229,7 +229,7 @@ export function CartPage() {
                     <div className={classes.lineBody}>
                       {imageUrl && (
                         <Link
-                          to={{ pathname: "/", hash: line.id }}
+                          to={{ pathname: "/products", hash: line.id }}
                           className={classes.thumbLink}
                           aria-label={`Open ${kit?.name ?? line.id}`}
                         >

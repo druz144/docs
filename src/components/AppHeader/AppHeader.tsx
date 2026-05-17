@@ -12,7 +12,10 @@ import { Link, NavLink, useMatch } from "react-router-dom";
 import { useCart } from "../../cart/useCart";
 import classes from "./AppHeader.module.css";
 
-const navLinks = [{ label: "Products", href: "/" }];
+const navLinks = [
+  { label: "Home", href: "/", end: true },
+  { label: "Products", href: "/products", end: false },
+];
 
 export function AppHeader() {
   const { setColorScheme } = useMantineColorScheme();
@@ -40,6 +43,7 @@ export function AppHeader() {
             <NavLink
               key={link.href}
               to={link.href}
+              end={link.end}
               className={({ isActive }) =>
                 `${classes.link} ${isActive ? classes.linkActive : ""}`
               }
