@@ -5,7 +5,7 @@ import { KitCard } from "./components/KitCard/KitCard";
 import kitCardClasses from "./components/KitCard/KitCard.module.css";
 import { kits } from "./data/kits";
 
-export function HomePage() {
+export function ProductsPage() {
   const location = useLocation();
 
   useEffect(() => {
