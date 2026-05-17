@@ -57,7 +57,8 @@ export function CartPage() {
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ? null
           : "Invalid e-mail address",
-      country: (value) => (value.trim().length === 0 ? "Country is required" : null),
+      country: (value) =>
+        value.trim().length === 0 ? "Country is required" : null,
     },
   });
 
