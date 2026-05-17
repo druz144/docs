@@ -1,9 +1,9 @@
 import { Container, Stack } from "@mantine/core";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { KitCard } from "./components/KitCard/KitCard";
-import kitCardClasses from "./components/KitCard/KitCard.module.css";
-import { kits } from "./data/kits";
+import { KitCard } from "../components/KitCard/KitCard";
+import kitCardClasses from "../components/KitCard/KitCard.module.css";
+import { kits } from "../data/kits";
 
 export function ProductsPage() {
   const location = useLocation();

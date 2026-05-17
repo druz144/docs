@@ -26,9 +26,9 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "./cart/useCart";
+import { useCart } from "../cart/useCart";
 import classes from "./Cart.module.css";
-import { getKitImageUrl, kitsById } from "./data/kits";
+import { getKitImageUrl, kitsById } from "../data/kits";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
