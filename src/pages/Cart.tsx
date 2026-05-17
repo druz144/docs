@@ -48,6 +48,7 @@ export function CartPage() {
     initialValues: {
       name: "",
       email: "",
+      country: "",
       message: "",
     },
     validate: {
@@ -56,6 +57,7 @@ export function CartPage() {
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ? null
           : "Invalid e-mail address",
+      country: (value) => (value.trim().length === 0 ? "Country is required" : null),
     },
   });
 
@@ -110,6 +112,7 @@ export function CartPage() {
     const body = {
       name: values.name,
       email: values.email,
+      country: values.country,
       message: values.message,
       _subject: `Order from ${values.name}`,
       itemsCount: totalCount,
@@ -351,6 +354,12 @@ export function CartPage() {
                 placeholder="your@email.com"
                 withAsterisk
                 {...form.getInputProps("email")}
+              />
+              <TextInput
+                label="Country"
+                placeholder="Your country"
+                withAsterisk
+                {...form.getInputProps("country")}
               />
               <Textarea
                 label="Notes"
