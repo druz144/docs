@@ -1,8 +1,8 @@
 import { Button, Container, Group, Stack, Text, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
-import classes from "./Landing.module.css";
+import classes from "./Home.module.css";
 
-export function LandingPage() {
+export function HomePage() {
   return (
     <Container size="lg" py="xl">
       <Stack gap="xl" className={classes.hero} ta="center" pt={48} pb={32}>
