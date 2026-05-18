@@ -2,7 +2,6 @@ import {
   ActionIcon,
   Alert,
   Anchor,
-  Badge,
   Button,
   Container,
   CopyButton,
@@ -122,17 +121,18 @@ export function KitDetailsPage() {
 
       <div className={classes.info}>
         <Stack gap="xs">
-          <Group gap="xs" wrap="wrap" align="center">
-            <Title order={1} size="h2" style={{ lineHeight: 1.2 }}>
-              {kit.name}
-            </Title>
-            {kit.type && (
-              <Badge variant="light" radius="sm">
-                {kit.type}
-              </Badge>
-            )}
-          </Group>
+          <Title order={1} size="h2" style={{ lineHeight: 1.2 }}>
+            {kit.name}
+          </Title>
           <Text c="dimmed">
+            {kit.type && (
+              <>
+                <Text span tt="capitalize" inherit>
+                  {kit.type}
+                </Text>
+                {" · "}
+              </>
+            )}
             {kit.planeManufacturer} · {kit.planeModel}
           </Text>
         </Stack>
@@ -161,16 +161,6 @@ export function KitDetailsPage() {
               </Text>
               <Text size="sm" fw={500}>
                 {kit.kitManufacturer}
-              </Text>
-            </Group>
-          )}
-          {kit.type && (
-            <Group gap="sm" wrap="wrap">
-              <Text size="sm" c="dimmed">
-                Type
-              </Text>
-              <Text size="sm" fw={500}>
-                {kit.type}
               </Text>
             </Group>
           )}

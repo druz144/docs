@@ -1,7 +1,6 @@
 import {
   ActionIcon,
   Anchor,
-  Badge,
   Button,
   Card,
   CopyButton,
@@ -69,25 +68,26 @@ export function KitCard({ kit }: KitCardProps) {
         <div className={classes.info}>
           <Group justify="space-between" align="flex-start" wrap="nowrap">
             <Stack gap={4} style={{ minWidth: 0 }}>
-              <Group gap="xs" wrap="wrap" align="center">
-                <Title order={3} style={{ lineHeight: 1.2 }}>
-                  <Anchor
-                    component={Link}
-                    to={detailsTo}
-                    underline="never"
-                    inherit
-                    c="inherit"
-                  >
-                    {kit.name}
-                  </Anchor>
-                </Title>
-                {kit.type && (
-                  <Badge variant="light" radius="sm">
-                    {kit.type}
-                  </Badge>
-                )}
-              </Group>
+              <Title order={3} style={{ lineHeight: 1.2 }}>
+                <Anchor
+                  component={Link}
+                  to={detailsTo}
+                  underline="never"
+                  inherit
+                  c="inherit"
+                >
+                  {kit.name}
+                </Anchor>
+              </Title>
               <Text c="dimmed" size="sm">
+                {kit.type && (
+                  <>
+                    <Text span tt="capitalize" inherit>
+                      {kit.type}
+                    </Text>
+                    {" · "}
+                  </>
+                )}
                 {kit.planeManufacturer} · {kit.planeModel}
               </Text>
             </Stack>
