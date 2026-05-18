@@ -13,7 +13,7 @@ export function HomePage() {
             for airliner scale models
           </Title>
           <Text size="lg" c="dimmed" maw={520} mx="auto">
-            3D-printed detail parts for airliner plastic kits. Designed to fit
+            Molded and hand-crafted detail parts for airliner plastic kits. Designed to fit
             Revell, Zvezda, and other major manufacturers.
           </Text>
         </Stack>
