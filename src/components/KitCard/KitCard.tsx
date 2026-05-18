@@ -20,23 +20,11 @@ import {
   IconShoppingCartPlus,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../../cart/useCart";
 import { getKitImageUrl, type Kit } from "../../data/kits";
+import { manualLabel, priceFormatter } from "../../utils/format";
 import classes from "./KitCard.module.css";
-
-const priceFormatter = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-});
-
-function manualLabel(label: string | undefined, url: string): string {
-  if (label && label.trim().length > 0) return label;
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return "Manual";
-  }
-}
 
 type KitCardProps = {
   kit: Kit;
@@ -45,7 +33,7 @@ type KitCardProps = {
 export function KitCard({ kit }: KitCardProps) {
   const imageUrl = kit.images[0] ? getKitImageUrl(kit.images[0]) : undefined;
   const [imageFailed, setImageFailed] = useState(false);
-  const anchorHref = `#${kit.id}`;
+  const detailsTo = `/products/${kit.id}`;
   const { getAmount, addItem, incrementItem, decrementItem } = useCart();
   const amount = getAmount(kit.id);
 
@@ -58,7 +46,11 @@ export function KitCard({ kit }: KitCardProps) {
       padding="md"
     >
       <div className={classes.body}>
-        <div className={classes.imageWrap}>
+        <Link
+          to={detailsTo}
+          className={classes.imageWrap}
+          aria-label={`View details for ${kit.name}`}
+        >
           {imageUrl && !imageFailed ? (
             <img
               className={classes.image}
@@ -72,7 +64,7 @@ export function KitCard({ kit }: KitCardProps) {
               <Text size="sm">No image</Text>
             </div>
           )}
-        </div>
+        </Link>
 
         <div className={classes.info}>
           <Group justify="space-between" align="flex-start" wrap="nowrap">
@@ -80,7 +72,8 @@ export function KitCard({ kit }: KitCardProps) {
               <Group gap="xs" wrap="wrap" align="center">
                 <Title order={3} style={{ lineHeight: 1.2 }}>
                   <Anchor
-                    href={anchorHref}
+                    component={Link}
+                    to={detailsTo}
                     underline="never"
                     inherit
                     c="inherit"
@@ -143,7 +136,7 @@ export function KitCard({ kit }: KitCardProps) {
                   size="sm"
                 >
                   <Group gap={4} wrap="nowrap">
-                    {manualLabel(manual.label, manual.url)}
+                    {manualLabel(manual)}
                     <IconExternalLink size={14} stroke={1.5} />
                   </Group>
                 </Anchor>
@@ -190,7 +183,7 @@ export function KitCard({ kit }: KitCardProps) {
             )}
 
             <CopyButton
-              value={`${window.location.origin}${window.location.pathname}#${kit.id}`}
+              value={`${window.location.origin}${window.location.pathname}#/products/${kit.id}`}
               timeout={1500}
             >
               {({ copied, copy }) => (

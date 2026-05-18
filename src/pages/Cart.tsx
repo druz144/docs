@@ -29,15 +29,11 @@ import { Link } from "react-router-dom";
 import { useCart } from "../cart/useCart";
 import classes from "./Cart.module.css";
 import { getKitImageUrl, kitsById } from "../data/kits";
+import { priceFormatter } from "../utils/format";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvzlawdw";
-
-const priceFormatter = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-});
 
 export function CartPage() {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
@@ -196,7 +192,7 @@ export function CartPage() {
                 <Text>Your cart is empty.</Text>
                 <Button
                   component={Link}
-                  to="/"
+                  to="/products"
                   variant="light"
                   rightSection={<IconArrowRight size={16} stroke={1.5} />}
                 >
@@ -214,7 +210,7 @@ export function CartPage() {
                 const kitLink = (
                   <Anchor
                     component={Link}
-                    to={{ pathname: "/products", hash: line.id }}
+                    to={`/products/${line.id}`}
                     underline="hover"
                     fw={600}
                   >
@@ -233,7 +229,7 @@ export function CartPage() {
                     <div className={classes.lineBody}>
                       {imageUrl && (
                         <Link
-                          to={{ pathname: "/products", hash: line.id }}
+                          to={`/products/${line.id}`}
                           className={classes.thumbLink}
                           aria-label={`Open ${kit?.name ?? line.id}`}
                         >
