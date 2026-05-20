@@ -45,6 +45,30 @@
   color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
 }
 
+.cartWrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.cartBadge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 18px;
+  padding: 0 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: var(--mantine-color-blue-light);
+  color: var(--mantine-color-blue-light-color);
+}
+
 .actionIconActive {
   background-color: light-dark(
     var(--mantine-color-gray-2),

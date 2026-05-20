@@ -2,7 +2,6 @@ import {
   ActionIcon,
   Container,
   Group,
-  Indicator,
   Text,
   useComputedColorScheme,
   useMantineColorScheme,
@@ -55,13 +54,7 @@ export function AppHeader() {
       </Group>
 
       <Group gap={8}>
-        <Indicator
-          label={totalCount}
-          size={16}
-          offset={4}
-          disabled={totalCount === 0}
-          inline
-        >
+        <div className={classes.cartWrap}>
           <ActionIcon
             component={Link}
             to="/cart"
@@ -73,7 +66,10 @@ export function AppHeader() {
           >
             <IconShoppingCart size={22} stroke={1.5} />
           </ActionIcon>
-        </Indicator>
+          {totalCount > 0 && (
+            <span className={classes.cartBadge}>{totalCount}</span>
+          )}
+        </div>
 
         <ActionIcon
           variant="default"
