@@ -26,18 +26,14 @@ import {
 } from "@tabler/icons-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useCart } from "./cart/useCart";
+import { useCart } from "../cart/useCart";
 import classes from "./Cart.module.css";
-import { getKitImageUrl, kitsById } from "./data/kits";
+import { getKitImageUrl, kitsById } from "../data/kits";
+import { priceFormatter } from "../utils/format";
 
 type SubmitState = "idle" | "loading" | "success" | "error";
 
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/xvzlawdw";
-
-const priceFormatter = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-});
 
 export function CartPage() {
   const [submitState, setSubmitState] = useState<SubmitState>("idle");
@@ -48,6 +44,7 @@ export function CartPage() {
     initialValues: {
       name: "",
       email: "",
+      country: "",
       message: "",
     },
     validate: {
@@ -56,6 +53,8 @@ export function CartPage() {
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
           ? null
           : "Invalid e-mail address",
+      country: (value) =>
+        value.trim().length === 0 ? "Country is required" : null,
     },
   });
 
@@ -110,6 +109,7 @@ export function CartPage() {
     const body = {
       name: values.name,
       email: values.email,
+      country: values.country,
       message: values.message,
       _subject: `Order from ${values.name}`,
       itemsCount: totalCount,
@@ -192,7 +192,7 @@ export function CartPage() {
                 <Text>Your cart is empty.</Text>
                 <Button
                   component={Link}
-                  to="/"
+                  to="/products"
                   variant="light"
                   rightSection={<IconArrowRight size={16} stroke={1.5} />}
                 >
@@ -204,13 +204,13 @@ export function CartPage() {
             <Stack gap="sm">
               {lines.map((line) => {
                 const kit = line.kit;
-                const imageUrl = kit?.image
-                  ? getKitImageUrl(kit.image)
+                const imageUrl = kit?.images[0]
+                  ? getKitImageUrl(kit.images[0])
                   : undefined;
                 const kitLink = (
                   <Anchor
                     component={Link}
-                    to={{ pathname: "/", hash: line.id }}
+                    to={`/products/${line.id}`}
                     underline="hover"
                     fw={600}
                   >
@@ -229,7 +229,7 @@ export function CartPage() {
                     <div className={classes.lineBody}>
                       {imageUrl && (
                         <Link
-                          to={{ pathname: "/", hash: line.id }}
+                          to={`/products/${line.id}`}
                           className={classes.thumbLink}
                           aria-label={`Open ${kit?.name ?? line.id}`}
                         >
@@ -351,6 +351,12 @@ export function CartPage() {
                 placeholder="your@email.com"
                 withAsterisk
                 {...form.getInputProps("email")}
+              />
+              <TextInput
+                label="Country"
+                placeholder="Your country"
+                withAsterisk
+                {...form.getInputProps("country")}
               />
               <Textarea
                 label="Notes"

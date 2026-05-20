@@ -4,48 +4,33 @@ import {
   Badge,
   Button,
   Card,
-  CopyButton,
   Group,
   Stack,
   Text,
   Title,
-  Tooltip,
 } from "@mantine/core";
 import {
-  IconCheck,
   IconExternalLink,
-  IconLink,
   IconMinus,
   IconPlus,
   IconShoppingCartPlus,
 } from "@tabler/icons-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../../cart/useCart";
 import { getKitImageUrl, type Kit } from "../../data/kits";
+import { manualLabel, priceFormatter } from "../../utils/format";
+import { KitManufacturerBadge } from "../KitManufacturerBadge";
 import classes from "./KitCard.module.css";
-
-const priceFormatter = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-});
-
-function manualLabel(label: string | undefined, url: string): string {
-  if (label && label.trim().length > 0) return label;
-  try {
-    return new URL(url).hostname.replace(/^www\./, "");
-  } catch {
-    return "Manual";
-  }
-}
 
 type KitCardProps = {
   kit: Kit;
 };
 
 export function KitCard({ kit }: KitCardProps) {
-  const imageUrl = kit.image ? getKitImageUrl(kit.image) : undefined;
+  const imageUrl = kit.images[0] ? getKitImageUrl(kit.images[0]) : undefined;
   const [imageFailed, setImageFailed] = useState(false);
-  const anchorHref = `#${kit.id}`;
+  const detailsTo = `/products/${kit.id}`;
   const { getAmount, addItem, incrementItem, decrementItem } = useCart();
   const amount = getAmount(kit.id);
 
@@ -58,7 +43,11 @@ export function KitCard({ kit }: KitCardProps) {
       padding="md"
     >
       <div className={classes.body}>
-        <div className={classes.imageWrap}>
+        <Link
+          to={detailsTo}
+          className={classes.imageWrap}
+          aria-label={`View details for ${kit.name}`}
+        >
           {imageUrl && !imageFailed ? (
             <img
               className={classes.image}
@@ -72,60 +61,48 @@ export function KitCard({ kit }: KitCardProps) {
               <Text size="sm">No image</Text>
             </div>
           )}
-        </div>
+        </Link>
 
         <div className={classes.info}>
-          <Group justify="space-between" align="flex-start" wrap="nowrap">
-            <Stack gap={4} style={{ minWidth: 0 }}>
-              <Group gap="xs" wrap="wrap" align="center">
-                <Title order={3} style={{ lineHeight: 1.2 }}>
-                  <Anchor
-                    href={anchorHref}
-                    underline="never"
-                    inherit
-                    c="inherit"
-                  >
-                    {kit.name}
-                  </Anchor>
-                </Title>
-                {kit.type && (
-                  <Badge variant="light" radius="sm">
-                    {kit.type}
-                  </Badge>
-                )}
-              </Group>
-              <Text c="dimmed" size="sm">
-                {kit.planeManufacturer} · {kit.planeModel}
-              </Text>
-            </Stack>
-
-            {typeof kit.priceEur === "number" && (
-              <div className={classes.priceCol}>
-                <Text fw={700} size="lg">
+          <Stack gap={4}>
+            <Group justify="space-between" align="baseline" wrap="nowrap">
+              <Title order={2} style={{ lineHeight: 1.2, minWidth: 0 }}>
+                <Anchor
+                  component={Link}
+                  to={detailsTo}
+                  underline="never"
+                  inherit
+                  c="inherit"
+                >
+                  {kit.name}
+                </Anchor>
+              </Title>
+              {typeof kit.priceEur === "number" && (
+                <Text
+                  fw={700}
+                  fz="var(--mantine-h2-font-size)"
+                  className={classes.priceCol}
+                >
                   {priceFormatter.format(kit.priceEur)}
                 </Text>
-              </div>
-            )}
-          </Group>
-
-          <Group gap="lg" mt="sm" wrap="wrap">
-            <Text size="sm">
-              <Text span c="dimmed">
-                Scale:{" "}
-              </Text>
-              <Text span fw={500}>
-                {kit.scale}
-              </Text>
+              )}
+            </Group>
+            <Text c="dimmed" size="md">
+              {kit.planeManufacturer} {kit.planeModel}
             </Text>
+          </Stack>
+
+          <Group gap="xs" mt="xs" align="center" wrap="wrap">
+            {kit.type && (
+              <Badge color="gray" variant="light" size="sm" tt="capitalize">
+                {kit.type}
+              </Badge>
+            )}
+            <Badge color="gray" variant="light" size="md">
+              {kit.scale}
+            </Badge>
             {kit.kitManufacturer && (
-              <Text size="sm">
-                <Text span c="dimmed">
-                  Kit by:{" "}
-                </Text>
-                <Text span fw={500}>
-                  {kit.kitManufacturer}
-                </Text>
-              </Text>
+              <KitManufacturerBadge name={kit.kitManufacturer} />
             )}
           </Group>
 
@@ -143,7 +120,7 @@ export function KitCard({ kit }: KitCardProps) {
                   size="sm"
                 >
                   <Group gap={4} wrap="nowrap">
-                    {manualLabel(manual.label, manual.url)}
+                    {manualLabel(manual)}
                     <IconExternalLink size={14} stroke={1.5} />
                   </Group>
                 </Anchor>
@@ -151,7 +128,7 @@ export function KitCard({ kit }: KitCardProps) {
             </Group>
           )}
 
-          <Group justify="space-between" mt="sm" wrap="nowrap">
+          <div style={{ marginTop: "var(--mantine-spacing-sm)" }}>
             {amount === 0 ? (
               <Button
                 variant="light"
@@ -188,32 +165,7 @@ export function KitCard({ kit }: KitCardProps) {
                 </ActionIcon>
               </Group>
             )}
-
-            <CopyButton
-              value={`${window.location.origin}${window.location.pathname}#${kit.id}`}
-              timeout={1500}
-            >
-              {({ copied, copy }) => (
-                <Tooltip
-                  label={copied ? "Link copied" : "Copy link"}
-                  withArrow
-                  position="left"
-                >
-                  <ActionIcon
-                    variant="subtle"
-                    onClick={copy}
-                    aria-label="Copy link to this kit"
-                  >
-                    {copied ? (
-                      <IconCheck size={16} stroke={1.5} />
-                    ) : (
-                      <IconLink size={16} stroke={1.5} />
-                    )}
-                  </ActionIcon>
-                </Tooltip>
-              )}
-            </CopyButton>
-          </Group>
+          </div>
         </div>
       </div>
     </Card>

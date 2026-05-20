@@ -2,7 +2,6 @@ import {
   ActionIcon,
   Container,
   Group,
-  Indicator,
   Text,
   useComputedColorScheme,
   useMantineColorScheme,
@@ -12,7 +11,10 @@ import { Link, NavLink, useMatch } from "react-router-dom";
 import { useCart } from "../../cart/useCart";
 import classes from "./AppHeader.module.css";
 
-const navLinks = [{ label: "Products", href: "/" }];
+const navLinks = [
+  { label: "Home", href: "/", end: true },
+  { label: "Products", href: "/products", end: false },
+];
 
 export function AppHeader() {
   const { setColorScheme } = useMantineColorScheme();
@@ -30,7 +32,7 @@ export function AppHeader() {
           component={Link}
           to="/"
           fw={700}
-          size="lg"
+          fz="1.75rem"
           className={classes.logo}
         >
           druz144
@@ -40,6 +42,7 @@ export function AppHeader() {
             <NavLink
               key={link.href}
               to={link.href}
+              end={link.end}
               className={({ isActive }) =>
                 `${classes.link} ${isActive ? classes.linkActive : ""}`
               }
@@ -51,37 +54,34 @@ export function AppHeader() {
       </Group>
 
       <Group gap={8}>
-        <Indicator
-          label={totalCount}
-          size={16}
-          offset={4}
-          disabled={totalCount === 0}
-          inline
-        >
+        <div className={classes.cartWrap}>
           <ActionIcon
             component={Link}
             to="/cart"
             variant="default"
-            size="lg"
+            size="xl"
             radius="md"
             aria-label="Cart"
             className={isCartActive ? classes.actionIconActive : ""}
           >
-            <IconShoppingCart size={18} stroke={1.5} />
+            <IconShoppingCart size={22} stroke={1.5} />
           </ActionIcon>
-        </Indicator>
+          {totalCount > 0 && (
+            <span className={classes.cartBadge}>{totalCount}</span>
+          )}
+        </div>
 
         <ActionIcon
           variant="default"
-          size="lg"
+          size="xl"
           radius="md"
           onClick={toggleColorScheme}
           aria-label="Toggle color scheme"
         >
           {computedColorScheme === "dark" ? (
-            <IconSun size={18} stroke={1.5} />
+            <IconSun size={22} stroke={1.5} />
           ) : (
-            <IconMoon size={18} stroke={1.5} />
+            <IconMoon size={22} stroke={1.5} />
           )}
         </ActionIcon>
       </Group>

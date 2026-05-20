@@ -13,7 +13,7 @@ export type Kit = {
   scale: string;
   priceEur?: number;
   manuals?: ManualLink[];
-  image: string;
+  images: string[];
 };
 
 export function getKitImageUrl(filename: string): string {
@@ -26,7 +26,7 @@ export const kits: Kit[] = [
     name: "CFM56-7B engines for Boeing 737 NG",
     type: "engine",
     planeManufacturer: "Boeing",
-    planeModel: "737 NG (737-600/-700/-800/-900)",
+    planeModel: "737 NG (-600/-700/-800/-900)",
     kitManufacturer: "Revell",
     scale: "1/144",
     priceEur: 24,
@@ -36,14 +36,18 @@ export const kits: Kit[] = [
         url: "https://airlinercafe.com/forums/topic/cfm56-7b-and-cfm56-7be-engines-for-boeing-737-ng-revell-zvezda-kits-in-1-144/",
       },
     ],
-    image: "0b7-2.jpg",
+    images: [
+      "cfm56-7b_revell/1_cov_B_R.jpg",
+      "cfm56-7b_revell/2set_B.jpg",
+      "cfm56-7b_revell/3dec_B.jpg",
+    ],
   },
   {
     id: "cfm56-7b_zvezda",
     name: "CFM56-7B engines for Boeing 737 NG",
     type: "engine",
     planeManufacturer: "Boeing",
-    planeModel: "737 NG (737-600/-700/-800/-900)",
+    planeModel: "737 NG (-600/-700/-800/-900)",
     kitManufacturer: "Zvezda",
     scale: "1/144",
     priceEur: 24,
@@ -53,7 +57,11 @@ export const kits: Kit[] = [
         url: "https://airlinercafe.com/forums/topic/cfm56-7b-and-cfm56-7be-engines-for-boeing-737-ng-revell-zvezda-kits-in-1-144/",
       },
     ],
-    image: "0b7-2.jpg",
+    images: [
+      "cfm56-7b_zvezda/1cov_B_Z.jpg",
+      "cfm56-7b_zvezda/2set_B.jpg",
+      "cfm56-7b_zvezda/3dec_B.jpg",
+    ],
   },
   {
     id: "winglets_b737_revell",
@@ -64,7 +72,7 @@ export const kits: Kit[] = [
     kitManufacturer: "Revell",
     scale: "1/144",
     priceEur: 5,
-    image: "1w7.jpg",
+    images: ["winglets_b737_revell/1w7.jpg"],
   },
   {
     id: "nose_b747",
@@ -75,7 +83,7 @@ export const kits: Kit[] = [
     kitManufacturer: "Revell",
     scale: "1/144",
     priceEur: 19,
-    image: "nb1.jpg",
+    images: ["nose_b747/nb1.jpg"],
   },
 ];
 

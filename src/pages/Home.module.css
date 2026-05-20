@@ -1,0 +1,4 @@
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+}

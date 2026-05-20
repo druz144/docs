@@ -1,5 +1,5 @@
 .card {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 96px;
   transition: box-shadow 200ms ease;
 }
 
@@ -11,6 +11,7 @@
 }
 
 .imageWrap {
+  display: block;
   flex: 0 0 220px;
   align-self: stretch;
   min-height: 160px;
@@ -20,6 +21,11 @@
     var(--mantine-color-gray-1),
     var(--mantine-color-dark-6)
   );
+  transition: opacity 150ms ease;
+}
+
+.imageWrap:hover {
+  opacity: 0.9;
 }
 
 .image {
