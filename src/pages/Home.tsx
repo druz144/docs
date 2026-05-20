@@ -13,8 +13,8 @@ export function HomePage() {
             for airliner scale models
           </Title>
           <Text size="lg" c="dimmed" maw={520} mx="auto">
-            Molded and hand-crafted detail parts for airliner plastic kits. Designed to fit
-            Revell, Zvezda, and other major manufacturers.
+            Molded and hand-crafted detail parts for airliner plastic kits.
+            Designed to fit Revell, Zvezda, and other major manufacturers.
           </Text>
         </Stack>
         <Group justify="center">
