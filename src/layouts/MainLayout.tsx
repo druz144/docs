@@ -4,7 +4,7 @@ import { AppHeader } from "../components/AppHeader/AppHeader";
 
 export function MainLayout() {
   return (
-    <AppShell header={{ height: 60 }}>
+    <AppShell header={{ height: 76 }}>
       <AppShell.Header>
         <AppHeader />
       </AppShell.Header>

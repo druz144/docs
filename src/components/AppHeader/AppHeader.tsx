@@ -33,7 +33,7 @@ export function AppHeader() {
           component={Link}
           to="/"
           fw={700}
-          size="lg"
+          fz="1.75rem"
           className={classes.logo}
         >
           druz144
@@ -66,26 +66,26 @@ export function AppHeader() {
             component={Link}
             to="/cart"
             variant="default"
-            size="lg"
+            size="xl"
             radius="md"
             aria-label="Cart"
             className={isCartActive ? classes.actionIconActive : ""}
           >
-            <IconShoppingCart size={18} stroke={1.5} />
+            <IconShoppingCart size={22} stroke={1.5} />
           </ActionIcon>
         </Indicator>
 
         <ActionIcon
           variant="default"
-          size="lg"
+          size="xl"
           radius="md"
           onClick={toggleColorScheme}
           aria-label="Toggle color scheme"
         >
           {computedColorScheme === "dark" ? (
-            <IconSun size={18} stroke={1.5} />
+            <IconSun size={22} stroke={1.5} />
           ) : (
-            <IconMoon size={18} stroke={1.5} />
+            <IconMoon size={22} stroke={1.5} />
           )}
         </ActionIcon>
       </Group>

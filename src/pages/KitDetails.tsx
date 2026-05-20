@@ -2,25 +2,21 @@ import {
   ActionIcon,
   Alert,
   Anchor,
+  Badge,
   Button,
   Container,
-  CopyButton,
-  Divider,
   Group,
   Modal,
   Stack,
   Text,
   Title,
-  Tooltip,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
   IconArrowLeft,
-  IconCheck,
   IconChevronLeft,
   IconChevronRight,
   IconExternalLink,
-  IconLink,
   IconMinus,
   IconPlus,
   IconShoppingCartPlus,
@@ -28,6 +24,7 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../cart/useCart";
+import { KitManufacturerBadge } from "../components/KitManufacturerBadge";
 import { getKitImageUrl, kitsById } from "../data/kits";
 import { manualLabel, priceFormatter } from "../utils/format";
 import classes from "./KitDetails.module.css";
@@ -120,82 +117,64 @@ export function KitDetailsPage() {
       </Group>
 
       <div className={classes.info}>
-        <Stack gap="xs">
-          <Title order={1} size="h2" style={{ lineHeight: 1.2 }}>
-            {kit.name}
-          </Title>
-          <Text c="dimmed">
-            {kit.type && (
-              <>
-                <Text span tt="capitalize" inherit>
-                  {kit.type}
-                </Text>
-                {" · "}
-              </>
+        <Stack gap={4}>
+          <Group justify="space-between" align="baseline" wrap="nowrap">
+            <Title order={1} size="h1" style={{ lineHeight: 1.2, minWidth: 0 }}>
+              {kit.name}
+            </Title>
+            {typeof kit.priceEur === "number" && (
+              <Text fw={700} fz="var(--mantine-h1-font-size)" style={{ whiteSpace: "nowrap" }}>
+                {priceFormatter.format(kit.priceEur)}
+              </Text>
             )}
-            {kit.planeManufacturer} · {kit.planeModel}
-          </Text>
-        </Stack>
-
-        {typeof kit.priceEur === "number" && (
-          <Text fw={700} size="xl">
-            {priceFormatter.format(kit.priceEur)}
-          </Text>
-        )}
-
-        <Divider />
-
-        <Stack gap={6}>
-          <Group gap="sm" wrap="wrap">
-            <Text size="sm" c="dimmed">
-              Scale
-            </Text>
-            <Text size="sm" fw={500}>
-              {kit.scale}
-            </Text>
           </Group>
-          {kit.kitManufacturer && (
-            <Group gap="sm" wrap="wrap">
-              <Text size="sm" c="dimmed">
-                Kit by
-              </Text>
-              <Text size="sm" fw={500}>
-                {kit.kitManufacturer}
-              </Text>
-            </Group>
-          )}
+          <Text c="dimmed" size="lg">
+            {kit.planeManufacturer} {kit.planeModel}
+          </Text>
         </Stack>
+
+        <Group gap="xs" align="center" wrap="wrap">
+          {kit.type && (
+            <Badge color="gray" variant="light" size="lg" tt="capitalize">
+              {kit.type}
+            </Badge>
+          )}
+          <Badge color="gray" variant="light" size="lg">
+            {kit.scale}
+          </Badge>
+          {kit.kitManufacturer && (
+            <KitManufacturerBadge name={kit.kitManufacturer} size="lg" />
+          )}
+        </Group>
 
         {kit.manuals && kit.manuals.length > 0 && (
-          <Stack gap={6}>
-            <Text size="sm" c="dimmed">
-              Manuals
+          <Group gap="xs" wrap="wrap">
+            <Text size="md" c="dimmed">
+              Manuals:
             </Text>
-            <Stack gap={4} align="flex-start">
-              {kit.manuals.map((manual) => (
-                <Anchor
-                  key={manual.url}
-                  href={manual.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  size="sm"
-                >
-                  <Group gap={4} wrap="nowrap">
-                    {manualLabel(manual)}
-                    <IconExternalLink size={14} stroke={1.5} />
-                  </Group>
-                </Anchor>
-              ))}
-            </Stack>
-          </Stack>
+            {kit.manuals.map((manual) => (
+              <Anchor
+                key={manual.url}
+                href={manual.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                size="md"
+              >
+                <Group gap={4} wrap="nowrap">
+                  {manualLabel(manual)}
+                  <IconExternalLink size={14} stroke={1.5} />
+                </Group>
+              </Anchor>
+            ))}
+          </Group>
         )}
 
-        <Divider />
-
-        <Group justify="space-between" wrap="nowrap">
+        <div>
           {amount === 0 ? (
             <Button
-              leftSection={<IconShoppingCartPlus size={16} stroke={1.5} />}
+              variant="light"
+              size="md"
+              leftSection={<IconShoppingCartPlus size={18} stroke={1.5} />}
               onClick={() => addItem(kit.id, 1)}
             >
               Add to cart
@@ -212,7 +191,7 @@ export function KitDetailsPage() {
               </ActionIcon>
               <Text
                 fw={600}
-                size="md"
+                size="lg"
                 ta="center"
                 style={{ minWidth: "2rem" }}
                 aria-live="polite"
@@ -229,39 +208,11 @@ export function KitDetailsPage() {
               </ActionIcon>
             </Group>
           )}
-
-          <CopyButton
-            value={`${window.location.origin}${window.location.pathname}#/products/${kit.id}`}
-            timeout={1500}
-          >
-            {({ copied, copy }) => (
-              <Tooltip
-                label={copied ? "Link copied" : "Copy link"}
-                withArrow
-                position="left"
-              >
-                <ActionIcon
-                  variant="subtle"
-                  onClick={copy}
-                  aria-label="Copy link to this kit"
-                >
-                  {copied ? (
-                    <IconCheck size={16} stroke={1.5} />
-                  ) : (
-                    <IconLink size={16} stroke={1.5} />
-                  )}
-                </ActionIcon>
-              </Tooltip>
-            )}
-          </CopyButton>
-        </Group>
+        </div>
       </div>
 
       {kit.images.length > 0 && (
         <section className={classes.gallerySection}>
-          <Title order={3} size="h4" mb="sm">
-            Gallery
-          </Title>
           <div className={classes.galleryGrid}>
             {kit.images.map((src, index) => (
               <button
