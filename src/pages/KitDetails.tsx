@@ -123,7 +123,11 @@ export function KitDetailsPage() {
               {kit.name}
             </Title>
             {typeof kit.priceEur === "number" && (
-              <Text fw={700} fz="var(--mantine-h1-font-size)" style={{ whiteSpace: "nowrap" }}>
+              <Text
+                fw={700}
+                fz="var(--mantine-h1-font-size)"
+                style={{ whiteSpace: "nowrap" }}
+              >
                 {priceFormatter.format(kit.priceEur)}
               </Text>
             )}

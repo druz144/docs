@@ -12,7 +12,11 @@ export function KitManufacturerBadge({ name, size = "md" }: Props) {
 
   if (hasRevell && hasZvezda) {
     return (
-      <Badge variant="gradient" gradient={{ from: "blue", to: "red" }} size={size}>
+      <Badge
+        variant="gradient"
+        gradient={{ from: "blue", to: "red" }}
+        size={size}
+      >
         {name}
       </Badge>
     );

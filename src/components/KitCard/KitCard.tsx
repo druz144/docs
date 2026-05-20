@@ -78,7 +78,11 @@ export function KitCard({ kit }: KitCardProps) {
                 </Anchor>
               </Title>
               {typeof kit.priceEur === "number" && (
-                <Text fw={700} fz="var(--mantine-h2-font-size)" className={classes.priceCol}>
+                <Text
+                  fw={700}
+                  fz="var(--mantine-h2-font-size)"
+                  className={classes.priceCol}
+                >
                   {priceFormatter.format(kit.priceEur)}
                 </Text>
               )}

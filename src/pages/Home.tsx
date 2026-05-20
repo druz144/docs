@@ -1,4 +1,12 @@
-import { Anchor, Button, Container, Group, Stack, Text, Title } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Container,
+  Group,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import { IconBrandInstagram } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import classes from "./Home.module.css";
